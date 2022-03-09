@@ -6,19 +6,12 @@
 #include "ItemSDATA.h"
 using namespace std;
 
-
-
 void WriteItemSQL(_ItemSDATA* ItemSDATA)
 {
 	if (remove("item.sql") != 0)
 		perror("item.sql doesn't exist, it will be created automatically.");
 	else
 		puts("File successfully deleted");
-
-
-
-
-
 
 	ofstream myfile;
 	myfile.open("item.sql", std::ios_base::app | std::ios_base::out);
@@ -27,13 +20,8 @@ void WriteItemSQL(_ItemSDATA* ItemSDATA)
 
 	for (int i = 0; i < ItemSDATA->ItemGroups.size(); i++) {
 		_ItemGroup* ItemGroup = ItemSDATA->ItemGroups[i];
-		//reverse(ItemGroup->Items.begin(), ItemGroup->Items.end());
 		for (int j = 0; j < ItemGroup->Items.size(); j++) {
 			_ItemModel* Item = ItemGroup->Items[j];
-
-			//std::replace(Item->Description.begin(), Item->Description.end(),'\'','\x20');
-			//std::replace(Item->ItemName.begin(), Item->ItemName.end(), '\'', '\'');
-	
 
 			size_t index = 0;
 
@@ -62,10 +50,6 @@ void WriteItemSQL(_ItemSDATA* ItemSDATA)
 				index += 2;
 			}
 
-
-
-
-
 			myfile << "INSERT INTO [PS_GameDefs].[dbo].[ItemsTest] values ("<<to_string((Item->type*1000)+Item->TypeID)<<",'"<<Item->ItemName<<"','"<<Item->Description<<"',"<<
 				to_string(Item->type) <<","<<
 				to_string(Item->TypeID) <<"," << to_string(Item->ItemModel) <<","<< to_string(Item->ItemIcon) <<","<< to_string(Item->ReqLevel) <<"," << to_string(Item->Country) <<","<<
@@ -82,16 +66,11 @@ void WriteItemSQL(_ItemSDATA* ItemSDATA)
 				to_string(Item->Server) <<","<< to_string(Item->Count)<<")";
 
 			myfile <<endl;
-			//ItemGroup->Items.pop_back();
-
-
 		}
 
 	}
 
 	myfile << "GO" << endl;
-
-
 
 	myfile.close();
 
